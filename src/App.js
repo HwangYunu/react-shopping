@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import { Row, Col, Navbar, Container, Nav } from 'react-bootstrap';
 import './App.css';
+import data from './data.js';
 
 function App() {
+  let [bears] = useState(data);
+
   return (
     <div className="App">
       <Navbar
         bg="light"
         variant="light">
         <Container>
-          <Navbar.Brand href="#home">BBshop</Navbar.Brand>
+          <Navbar.Brand href="#home">BearShop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#features">Cart</Nav.Link>
@@ -18,39 +22,30 @@ function App() {
 
       <div className="main-bg"></div>
 
-      <Container>
-        <Row>
-          <Col sm>
-            <img
-              src="http://m.imaxtore.com/web/product/extra/big/201808/697aa961184b01ef6cab13246c9e4c06.jpg"
-              width="80%"
-              alt=""
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-
-          <Col sm>
-            <img
-              src="http://m.imaxtore.com/web/product/extra/big/201808/360d07d224bbedefd49a1277a998de66.jpg"
-              width="80%"
-              alt=""
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col sm>
-            <img
-              src="http://m.imaxtore.com/web/product/extra/big/201808/ae8e01ed60c4794403548f89bb1f0039.jpg"
-              width="80%"
-              alt=""
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-        </Row>
-      </Container>
+      <ProductComponent bears={bears} />
     </div>
+  );
+}
+
+function ProductComponent(props) {
+  return (
+    <Container>
+      <Row>
+        {props.bears.map((a, i) => (
+          <Col
+            sm
+            key={i}>
+            <img
+              src={process.env.PUBLIC_URL + `/img/bear${i + 1}.jpg`}
+              width="80%"
+              alt=""
+            />
+            <h4>{props.bears[i].title}</h4>
+            <p>{props.bears[i].price}</p>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 }
 
