@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 function Detail(props) {
   // 유저가 URL 파라미터에 입력한  값을 저장하는 함수
   let { id } = useParams()
+  // 정렬 후 상세페이지 값 고정시키기 위함
+  let thisProductId = props.bears.find(x => x.id === id * 1)
   let [detailLoad, setDetailLoad] = useState('start')
   let [tabs, setTabs] = useState(0)
 
@@ -15,7 +17,7 @@ function Detail(props) {
     }
   }, [])
 
-  return props.bears[id] ? (
+  return thisProductId ? (
     <div className={`container ${detailLoad}`}>
       {
         //alert === true ? <div className="alert alert-warning">2초이내 구매시 할인</div> : <></>
@@ -24,17 +26,17 @@ function Detail(props) {
       <div className="row">
         <div className="col-md-6">
           <img
-            // src={process.env.PUBLIC_URL + `/img/bear${props.bears[id].id}.jpg`}
-            src={`https://codingapple1.github.io/shop/shoes${props.bears[id].id + 1}.jpg`}
+            // src={process.env.PUBLIC_URL + `/img/bear${thisProductId.id}.jpg`}
+            src={`https://codingapple1.github.io/shop/shoes${thisProductId.id + 1}.jpg`}
             width="100%"
             alt=""
           />
         </div>
 
         <div className="col-md-6">
-          <h4 className="pt-5">{props.bears[id].title}</h4>
-          <p>{props.bears[id].content}</p>
-          <p>{props.bears[id].price}</p>
+          <h4 className="pt-5">{thisProductId.title}</h4>
+          <p>{thisProductId.content}</p>
+          <p>{thisProductId.price}</p>
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>

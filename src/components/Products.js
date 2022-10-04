@@ -50,7 +50,8 @@ function Products(props) {
               key={i}>
               <div
                 onClick={() => {
-                  props.navigate(`/detail/${props.bears[i].id}`)
+                  let findDetailId = a.id
+                  props.navigate(`/detail/${findDetailId}`)
                 }}>
                 <img
                   // src={process.env.PUBLIC_URL + `/img/bear${props.bears[i].id}.jpg`}
