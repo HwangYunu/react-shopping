@@ -1,25 +1,28 @@
-import { useState } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
-import './App.css';
-import data from './data.js';
-import { Routes, Route, Link } from 'react-router-dom';
+import { useState } from 'react'
+import './App.css'
+import { Nav, Navbar, Container } from 'react-bootstrap'
+import { Routes, Route, useNavigate } from 'react-router-dom'
+import data from './data.js'
+import Products from './components/Products'
+import Detail from './components/Detail'
 
 function App() {
-  let [bears] = useState(data);
+  let [bears, setBears] = useState(data)
+  let navigate = useNavigate()
 
   return (
     <div className="App">
-      <ul>
-        <li>
-          <Link to="/">BearShop</Link>
-        </li>
-        <li>
-          <Link to="/">홈</Link>
-        </li>
-        <li>
-          <Link to="/detail">상세페이지</Link>
-        </li>
-      </ul>
+      <Navbar
+        bg="light"
+        variant="light">
+        <Container>
+          <Navbar.Brand onClick={() => navigate('/')}>BearShop</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
+            <Nav.Link onClick={() => navigate('/detail')}>Detail</Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
 
       <Routes>
         <Route
@@ -27,39 +30,27 @@ function App() {
           element={
             <>
               <div className="main-bg"></div>
-              <ProductComponent bears={bears} />
+              <Products
+                bears={bears}
+                setBears={setBears}
+                navigate={navigate}
+              />
             </>
           }
         />
+
         <Route
-          path="/detail"
-          element={<div>상세페이지임</div>}
+          path="/detail/:id"
+          element={<Detail bears={bears} />}
+        />
+
+        <Route
+          path="*"
+          element={<div>페이지를 찾을수 없습니다.</div>}
         />
       </Routes>
     </div>
-  );
+  )
 }
 
-function ProductComponent(props) {
-  return (
-    <Container>
-      <Row>
-        {props.bears.map((a, i) => (
-          <Col
-            sm
-            key={i}>
-            <img
-              src={process.env.PUBLIC_URL + `/img/bear${i + 1}.jpg`}
-              width="80%"
-              alt=""
-            />
-            <h4>{props.bears[i].title}</h4>
-            <p>{props.bears[i].price}</p>
-          </Col>
-        ))}
-      </Row>
-    </Container>
-  );
-}
-
-export default App;
+export default App

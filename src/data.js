@@ -8,7 +8,7 @@ let data = [
 
   {
     id: 1,
-    title: 'Grizz',
+    title: 'Grizzly',
     content: 'Born in Canada',
     price: 110000,
   },
