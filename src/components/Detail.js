@@ -1,12 +1,16 @@
 import { Nav } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { existProduct } from '../store'
+import { useDispatch } from 'react-redux'
 
 function Detail(props) {
   // 유저가 URL 파라미터에 입력한  값을 저장하는 함수
   let { id } = useParams()
   // 정렬 후 상세페이지 값 고정시키기 위함
   let thisProductId = props.bears.find(x => x.id === id * 1)
+  // let state = useSelector(state => state.cartInfo)
+  let dispatch = useDispatch()
   let [detailLoad, setDetailLoad] = useState('start')
   let [tabs, setTabs] = useState(0)
 
@@ -37,7 +41,14 @@ function Detail(props) {
           <h4 className="pt-5">{thisProductId.title}</h4>
           <p>{thisProductId.content}</p>
           <p>{thisProductId.price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              let addThis = `${thisProductId.title}`
+              dispatch(existProduct(addThis))
+            }}>
+            장바구니 담기
+          </button>
         </div>
       </div>
 

@@ -5,6 +5,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import data from './data.js'
 import Products from './components/Products'
 import Detail from './components/Detail'
+import Cart from './components/Cart'
 
 function App() {
   let [bears, setBears] = useState(data)
@@ -19,7 +20,7 @@ function App() {
           <Navbar.Brand onClick={() => navigate('/')}>BearShop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
-            <Nav.Link onClick={() => navigate('/detail')}>Detail</Nav.Link>
+            <Nav.Link onClick={() => navigate('/cart')}>장바구니</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -42,6 +43,11 @@ function App() {
         <Route
           path="/detail/:id"
           element={<Detail bears={bears} />}
+        />
+
+        <Route
+          path="/cart"
+          element={<Cart />}
         />
 
         <Route
